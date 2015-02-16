@@ -1,0 +1,31 @@
+NAME="multimedia-menus"
+VERSION=0.3.4
+RELEASE=1
+CATEGORY="X11"
+SUMMARY="Categorized submenus for the Multimedia menu"
+DESCRIPTION="Categorized sub-menus for the GNOME/KDE/MATE Audio&Video/Multimedia
+menu, for better usability and easy access of multimedia applications."
+HOMEPAGE="https://fedorahosted.org/multimedia-menus/"
+SRC_URI="https://oget.fedorapeople.org/multimedia-menus/SOURCE/multimedia-menus-${VERSION}.tar.xz"
+
+ARCH=noarch
+
+DIFF_EXCLUDES="*.directory .intltool-merge-cache"
+
+REQUIRES="redhat-menus"
+
+src_compile() {
+	cd ${S}
+	cygmake
+}
+
+src_install() {
+	cd ${S}
+	insinto /etc/xdg/menus/applications-merged
+	doins *.menu
+
+	insinto /usr/share/desktop-directories
+	doins desktop-directories/*.directory
+
+	cp -a icons ${D}/usr/share/
+}
